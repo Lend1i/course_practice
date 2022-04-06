@@ -5,8 +5,8 @@ const concat        = require ('gulp-concat');
 const browserSync   = require('browser-sync').create();
 const uglify        = require('gulp-uglify-es').default;
 const autoprefixer  = require('gulp-autoprefixer');
-const imagemin      = require('gulp-imagemin')   
-const del           = require('del')  
+const imagemin      = require('gulp-imagemin');  
+const del           = require('del');
 
 function browsersync() {
     browserSync.init({
@@ -35,7 +35,7 @@ function images() {
                 })
             ]
         ))
-        .pipe(dest('dist/images'))
+        .pipe(dest('dist/images'));
 }
 
 function scripts() {
@@ -46,7 +46,7 @@ function scripts() {
     .pipe(concat('main.min.js'))
     .pipe(uglify())
     .pipe(dest('app/js'))
-    .pipe(browserSync.stream())      
+    .pipe(browserSync.stream());
 }
 
 function styles() {
@@ -57,7 +57,7 @@ function styles() {
             overrideBrowserslist: ['last 10 version']
         }))
         .pipe(dest('app/css'))
-        .pipe(browserSync.stream()) 
+        .pipe(browserSync.stream());
 }
 
 function build() {
@@ -67,13 +67,13 @@ function build() {
         'app/js/main.min.js',
         'app/*.html'
     ], {base: 'app'})
-        .pipe(dest('dist'))
+        .pipe(dest('dist'));
 }  
 
 function watching() {
-    watch(['app/scss/**/*.scss'], styles)
-    watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts)
-    watch(['app/*.html']).on('change', browserSync.reload)   
+    watch(['app/scss/**/*.scss'], styles);
+    watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts);
+    watch(['app/*.html']).on('change', browserSync.reload);
 }
 
 
@@ -84,5 +84,5 @@ exports.scripts = scripts;
 exports.images = images;
 exports.cleandist = cleandist;
 
-exports.build = series(cleandist, images, build)
+exports.build = series(cleandist, images, build);
 exports.default = parallel(styles, scripts, browsersync, watching);
